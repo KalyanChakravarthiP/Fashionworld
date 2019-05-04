@@ -1,98 +1,109 @@
+
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-
+<html>
 <head>
-  <meta charset="utf-8">
-  <title>Men's Fashion world</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/styles.css">
-
-  <script type="text/javascript" src="js/index.js"></script>
-
-
+	<title> :: Fashion Hub ::</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<link rel="stylesheet" href="styles/style.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+	<!-- <script >
+		if('serviceWorker'in navigator){
+			navigator.serviceWorker.register('sw.js')
+			.then(register=>{
+				console.log("Sw registered");
+			}).catch(error=>{
+				console.log("failed");
+			});
+			}
+		
+	</script> -->
 </head>
+<body>
+<header>
+	<a href="index.html">Home</a>
+	<ul>
+		<li> <a href="index.html?id=2"> CASUALS </a> </li>
+		<li> <a href="index.html?id=1"> FORMALS </a> </li>
+		<li> <a href="index.html?id=3"> JEANS </a> </li>
 
-<body class="body">
-  <div id="sidebar">
-    <div class="toggle-btn" onclick="toggleSidebar()">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-    <ul>Shirts
-      <li onclick="casual();">Casual </li>
-      <li onclick="formal();">Formal</li>
-      <li onclick="jeans();">Jeans</li>
-    </ul>
-  </div>
-  <div class="" id="cloths-list">
-    <div class="" id="maincasual">
+	</ul>
+</header>
 
+<div class="offer">
+	<h1> NEW FESTIVE SEASON SATRTED. </h1>
+	<h2> Buy your products with lowest price </h2>
+	<h2>Casual shirts available as simple as possible</h2>
 
-    <div class="casualcard">
-      <img src="images/Casual Black Shirt.jpeg" alt="Casual Black Shirt">
-      <br><br>
-    <a href="selection.html"> <p>Casual Black Shirt</p></a>
-    </div>
-    <div class="casualcard">
-      <img src="images/Casual Burlywood Shirt.jpeg" alt="Casual Burlywood Shirt"><br>
-    <br>  <p>Casual Burlywood Shirt</p>
-    </div>
-    <div class="casualcard">
-      <img src="images/Casual Gray Blue Shirt.jpeg" alt="Casual  Gray Blue Shirt">
-    <br> <br> <p>Casual Gray Blue Shirt</p>
-    </div>
-    <div class="casualcard">
-      <img src="images/Casual Pink Shirt.jpeg" alt="Casual Pink Shirt">
-    <br> <br> <p>Casual Pink Shirt</p>
-    </div>
-    </div>
-    <div class="" id="mainformal">
-
-
-    <div class="formalcard">
-      <img src="images/Formal Tropical Voilet Shirt.jpeg" alt="Formal Tropical Voilet Shirt">
-    <br> <br> <p>Formal Tropical Voilet Shirt</p>
-    </div>
-    <div class="formalcard">
-      <img src="images/Formal Blue Voilet Shirt .jpeg" alt="Formal Blue Voilet Shirt">
-      <br>
-      <br>
-      <p>Formal Blue Voilet Shirt</p>
-    </div>
-    <div class="formalcard">
-      <img src="images/Formal Pale Shirt.jpeg" alt="Formal Pale Shirt">
-    <br> <br> <p>Formal Pale Shirt</p>
-    </div>
-    <div class="formalcard">
-      <img src="images/Formal Slate Shirt.jpeg" alt="Formal Slate Shirt">
-    <br><br>  <p>Formal Slate Shirt</p>
-    </div>
-  </div>
-
-<div  id="mainjeans">
-
-
-  </div>
-
+	<h2>Formal shirts available as simple as possible</h2>
+	<h2>Jeans are available as simple as possible</h2>
+	
+</div>
+<div class="parent">
+	
 </div>
 
-<script type="text/javascript" src="js/main.js"></script>
-<script>
+	
 
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function() {
-       navigator.serviceWorker.register('serviceworker.js').then(function(registration) {
-        // Registration was successful
-        console.log('ServiceWorker registration successful with scope: ', registration.scope);
-      }, function(err) {
-        // registration failed :(
-        console.log('ServiceWorker registration failed: ', err);
-      });
-    });
-  }
+<footer>Copyt  Rights are reserved &copy; &lt;2018 &gt;</footer>
 
-  </script>
+<script type="text/javascript">
+// var get={};
+	var query=window.location.search.substring(1).split("&");
+	for (var i = 0, max=query.length; i<max; i++) {
+		if (query[i]==="")
+			continue;
+		var param=query[i].split("=");
+		 console.log(param);
+
+	}
+
+	 console.log(param[1]);
+
+	fetch("database.json").then(res=>{
+		return res.json();
+	}).then(data=>{
+		console.log(data);
+		 products(data.products);
+	})
+
+	var mainDiv=document.querySelector(".parent");
+
+	function products(pro){
+		for(var i in pro){
+			console.log(pro[i].name);
+			var offer=document.querySelector(".offer");
+			offer.style.display="none";
+			if(pro[i].id==param[1]){
+				var childDiv=document.createElement("div");
+				childDiv.classList.add("child");
+				
+
+				var name=document.createElement("h2");
+				name.textContent=pro[i].name;
+				childDiv.append(name);
+
+				var proImg=document.createElement("img");
+				proImg.src=pro[i].image;
+				proImg.alt=pro[i].name;
+				proImg.classList.add("proImg");
+				childDiv.append(proImg);
+
+				var price=document.createElement("h3");
+				price.textContent="₹ : "+pro[i].price;
+				childDiv.append(price);
+
+				var link=document.createElement("a");
+				link.href="desc.html?id="+pro[i].subid;
+				link.textContent="View product";
+				childDiv.append(link);
+				link.classList.add("link");
+				mainDiv.append(childDiv);
+			}
+
+
+			}
+		
+	}
+	</script>
 </body>
-
 </html>
